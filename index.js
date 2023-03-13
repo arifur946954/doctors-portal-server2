@@ -19,6 +19,7 @@ async function run(){
 await client.connect();
 const appoinmentOptionCollection=client.db("Doctors-Portal2").collection("appoinmentOption2");
 const bookingsCollection=client.db("Doctors-Portal2").collection("bookings");
+const addUser=client.db("Doctors-Portal2").collection("user");
 //get data from db
 app.get('/appoinmentOption2',async(req,res)=>{
 const query={};
@@ -30,11 +31,23 @@ res.send(user);
 
 //post data from user
 app.post('/bookings',async(req,res)=>{
-    const booking=await req.body;
-    const result=await bookingsCollection.insertOne(booking);
-    await res.send(result)
+    const bookings=await req.body;
+    const result=await bookingsCollection.insertOne(bookings);
+     res.send(result)
     console.log(result);
 })
+
+//user data post
+app.post('/user',async(req,res)=>{
+    const useData=await req.body;
+    const result=await addUser.insertOne(useData);
+     res.send(result)
+    console.log(result);
+})
+
+
+
+
     }
     finally{
 
