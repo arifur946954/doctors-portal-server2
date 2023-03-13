@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors=require('cors');
+app.use(cors());
 app.use(express.json());
 require('dotenv').config();
 const port=process.env.PORT || 5000;
@@ -17,12 +18,22 @@ async function run(){
     try{
 await client.connect();
 const appoinmentOptionCollection=client.db("Doctors-Portal2").collection("appoinmentOption2");
+const bookingsCollection=client.db("Doctors-Portal2").collection("bookings");
 //get data from db
 app.get('/appoinmentOption2',async(req,res)=>{
 const query={};
 const cursor=appoinmentOptionCollection.find(query);
 const user=await cursor.toArray();
 res.send(user);
+})
+
+
+//post data from user
+app.post('/bookings',async(req,res)=>{
+    const booking=await req.body;
+    const result=await bookingsCollection.insertOne(booking);
+    await res.send(result)
+    console.log(result);
 })
     }
     finally{
