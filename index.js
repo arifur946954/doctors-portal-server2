@@ -1,12 +1,13 @@
 const express=require('express');
 const app=express();
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const ObjectId=require('mongodb').ObjectId;
 const cors=require('cors');
 app.use(cors());
 app.use(express.json());
 require('dotenv').config();
 const port=process.env.PORT || 5000;
-
+ 
 
 
 
@@ -31,8 +32,10 @@ res.send(user);
 
 //post data from user
 app.post('/bookings',async(req,res)=>{
-    const bookings=await req.body;
-    const result=await bookingsCollection.insertOne(bookings);
+
+    const bookingss=req.body;
+    // console.log(bookingss);
+    const result=await bookingsCollection.insertOne(bookingss);
      res.send(result)
     console.log(result);
 })
@@ -40,7 +43,8 @@ app.post('/bookings',async(req,res)=>{
 //user data post
 app.post('/user',async(req,res)=>{
     const useData=await req.body;
-    const result=await addUser.insertOne(useData);
+     //console.log(useData);
+     const result=await addUser.insertOne(useData);
      res.send(result)
     console.log(result);
 })
