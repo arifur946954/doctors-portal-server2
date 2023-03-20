@@ -48,7 +48,14 @@ options.forEach(option=>{
 res.send(options);
 
 })
-
+//get bookings data from database
+app.get('/bookings',async(req,res)=>{
+    const email=req.query.email;
+    console.log(email);
+    const query={email:email}
+    const booking=await bookingsCollection.find(query).toArray();
+    res.send(booking);
+})
 
 //post data from user
 app.post('/bookings',async(req,res)=>{
